@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+   apigateway_tutorial:
+        image: ${DOCKER_REGISTRY-}apigatewaytutorial
+        build:
+            context: .
+            dockerfile: Apigateway_tutorial/Dockerfile
+        ports:
+            - "5000:5000"
+            - "5001:5001"
+        networks:
+            - proxybackend
+
+   loginapi:
+        image:  ${DOCKER_REGISTRY-}loginapi
+        build:
+            context: .
+            dockerfile: LoginApi/Dockerfile
+        ports:
+             - "5101:5100"
+             - "5102:5102"
+        networks:
+            - proxybackend
+    
+   registerapi:
+        image:  ${DOCKER_REGISTRY-}registerapi
+        build:
+            context: .
+            dockerfile: RegisterApi/Dockerfile
+        ports:
+             - "5201:5200"
+             - "5202:5202"
+        networks:
+            - proxybackend
+
+networks:
+  proxybackend:
+    name: proxybackend
+    driver: bridge  
+
